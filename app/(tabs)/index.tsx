@@ -57,8 +57,6 @@ export default function App() {
         [search, list, sortBy, selectedTypes]
     );
 
-    console.log(objectKeys(pokemonTypes));
-
     return (
         <ScrollView style={styles.container}>
             <View style={styles.search}>

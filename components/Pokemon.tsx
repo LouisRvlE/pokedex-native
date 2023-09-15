@@ -12,21 +12,6 @@ const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.catchContainer}>
-                <Text style={styles.name}>
-                    {pokemonData ? captilize(pokemonData.name) : "Chargement"}
-                </Text>
-                <Pressable style={styles.catchButton} onPress={toggle}>
-                    <Image
-                        style={styles.catchImage}
-                        source={
-                            isCatch
-                                ? require("../assets/pokemon_black.svg")
-                                : require("../assets/pokemon_white.svg")
-                        }
-                    />
-                </Pressable>
-            </View>
             {pokemonData && pokemonData?.sprites?.front_default && (
                 <Pressable
                     onPressIn={() => setPress(true)}
@@ -48,6 +33,21 @@ const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
                     />
                 </Pressable>
             )}
+            <View style={styles.catchContainer}>
+                <Text style={styles.name}>
+                    {pokemonData ? captilize(pokemonData.name) : "Chargement"}
+                </Text>
+                <Pressable style={styles.catchButton} onPress={toggle}>
+                    <Image
+                        style={styles.catchImage}
+                        source={
+                            isCatch
+                                ? require("../assets/pokemon_black.svg")
+                                : require("../assets/pokemon_white.svg")
+                        }
+                    />
+                </Pressable>
+            </View>
             <View>
                 <View style={styles.types}>
                     {pokemonData.types.map(({ type: { name, url } }, id) => (
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
         alignItems: "center",
         width: 200,
-        minHeight: 200,
+        height: 300,
     },
     frontImage: {
         height: 200,
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     types: {
         display: "flex",
         flexDirection: "row",
+        flex: 1,
         gap: 5,
         flexWrap: "wrap",
     },
@@ -106,7 +107,8 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         borderRadius: 100,
         // width: 100,
-        minWidth: 100,
+        // minWidth: 100,
+        width: 100,
         flex: 1,
     },
     typeText: {

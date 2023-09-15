@@ -10,6 +10,7 @@ import {
 import PokemonWrapper from "../../components/PokemonFetchWrapper";
 import { PokemonData } from "../../types";
 import { usePokemonListAction } from "../../scripts/storage";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function AllList() {
     const [result, setResult] = useState<{
@@ -19,7 +20,7 @@ export default function AllList() {
     }>();
 
     const [actual, setActual] = useState<string>(
-        "https://pokeapi.co/api/v2/pokemon/?limit=11"
+        "https://pokeapi.co/api/v2/pokemon/?limit=14"
     );
     const [loading, setLoading] = useState(true);
     const makeFetch = async (url: string) => {
@@ -33,8 +34,6 @@ export default function AllList() {
         setLoading(false);
     };
 
-    console.log("act", actual);
-
     usePokemonListAction(makeFetch, actual);
 
     const controls = (
@@ -45,7 +44,12 @@ export default function AllList() {
                     disabled={loading}
                     onPress={() => makeFetch(result.previous)}
                 >
-                    <Text>{"<"}</Text>
+                    <FontAwesome
+                        color={"red"}
+                        size={28}
+                        style={{ marginBottom: -3 }}
+                        name="chevron-left"
+                    />
                 </Pressable>
             ) : (
                 <View />
@@ -56,7 +60,12 @@ export default function AllList() {
                     disabled={loading}
                     onPress={() => makeFetch(result.next)}
                 >
-                    <Text>{">"}</Text>
+                    <FontAwesome
+                        color={"red"}
+                        size={28}
+                        style={{ marginBottom: -3 }}
+                        name="chevron-right"
+                    />
                 </Pressable>
             )}
         </View>
@@ -109,14 +118,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     press: {
-        backgroundColor: "#FF0000",
-        paddingHorizontal: 10,
-        color: "#FFFFFF",
-        fontWeight: "900",
+        // backgroundColor: "#FF0000",
+        // paddingHorizontal: 10,
         aspectRatio: "1/1",
-        fontSize: 20,
-        paddingVertical: 5,
+        padding: 15,
         borderRadius: 100,
         margin: 5,
+    },
+    pressText: {
+        fontSize: 20,
+        fontWeight: "900",
+        color: "#FFFFFF",
     },
 });
