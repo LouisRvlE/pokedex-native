@@ -7,7 +7,7 @@ import pokemonTypes from "../scripts/pokemonTypes";
 
 const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
     const [isPress, setPress] = useState(false);
-    const [modal, setModal] = useState(() => pokemonData.name === "dragonair");
+    const [modal, setModal] = useState(false);
 
     const [isCatch, toggle] = usePokemonCatch(pokemonData);
 
@@ -158,6 +158,7 @@ const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
                                 </View>
                                 {wantedKeys.map((key, id) => (
                                     <Text
+                                        key={key}
                                         style={{
                                             fontWeight: "700",
                                             color: "white",
