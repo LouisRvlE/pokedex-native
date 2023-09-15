@@ -30,6 +30,7 @@ body {
 }
 * {
   image-rendering: pixelated;
+  user-select: none;
 }
 @media (prefers-color-scheme: dark) {
   body {
