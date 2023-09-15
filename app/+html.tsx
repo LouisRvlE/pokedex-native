@@ -28,7 +28,7 @@ body {
   overflow: hidden;
   
 }
-img {
+* {
   image-rendering: pixelated;
 }
 @media (prefers-color-scheme: dark) {
