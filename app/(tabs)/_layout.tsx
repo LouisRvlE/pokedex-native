@@ -1,6 +1,6 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
+import { Pressable, useColorScheme, Image } from "react-native";
 
 import Colors from "../../constants/Colors";
 
@@ -25,11 +25,18 @@ export default function TabLayout() {
                 options={{
                     title: "My Pokedex",
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
-                            name="square-o"
-                            color={focused ? "red" : "gray"}
+                        // <TabBarIcon
+                        //     name="square-o"
+                        //     color={focused ? "red" : "gray"}
+                        // />
+                        <Image
+                            source={
+                                focused
+                                    ? require("../../assets/pokedex_active.png")
+                                    : require("../../assets/pokedex.png")
+                            }
+                            style={{ width: 24, height: 24 }}
                         />
-                        // <Image  />
                     ),
                 }}
             />
@@ -38,9 +45,17 @@ export default function TabLayout() {
                 options={{
                     title: "All Pokemon",
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
-                            name="search"
-                            color={focused ? "red" : "gray"}
+                        // <TabBarIcon
+                        //     name="search"
+                        //     color={focused ? "red" : "gray"}
+                        // />
+                        <Image
+                            source={
+                                focused
+                                    ? require("../../assets/pokedex_active.png")
+                                    : require("../../assets/pokedex.png")
+                            }
+                            style={{ width: 24, height: 24 }}
                         />
                     ),
                 }}
