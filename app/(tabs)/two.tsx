@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, View, StyleSheet, ScrollView } from "react-native";
+import {
+    Button,
+    View,
+    StyleSheet,
+    ScrollView,
+    Pressable,
+    Text,
+} from "react-native";
 import PokemonWrapper from "../../components/PokemonFetchWrapper";
 import { PokemonData } from "../../types";
 import { usePokemonListAction } from "../../scripts/storage";
@@ -12,7 +19,7 @@ export default function AllList() {
     }>();
 
     const [actual, setActual] = useState<string>(
-        "https://pokeapi.co/api/v2/pokemon/?limit=24"
+        "https://pokeapi.co/api/v2/pokemon/?limit=11"
     );
     const [loading, setLoading] = useState(true);
     const makeFetch = async (url: string) => {
@@ -26,52 +33,45 @@ export default function AllList() {
         setLoading(false);
     };
 
+    console.log("act", actual);
+
     usePokemonListAction(makeFetch, actual);
+
+    const controls = (
+        <View style={styles.controls}>
+            {result?.previous ? (
+                <Pressable
+                    style={styles.press}
+                    disabled={loading}
+                    onPress={() => makeFetch(result.previous)}
+                >
+                    <Text>{"<"}</Text>
+                </Pressable>
+            ) : (
+                <View />
+            )}
+            {result?.next && (
+                <Pressable
+                    style={styles.press}
+                    disabled={loading}
+                    onPress={() => makeFetch(result.next)}
+                >
+                    <Text>{">"}</Text>
+                </Pressable>
+            )}
+        </View>
+    );
 
     return (
         <View style={styles.container}>
             <ScrollView style={styles.scollContainer}>
-                <View style={styles.controls}>
-                    {result?.previous ? (
-                        <Button
-                            disabled={loading}
-                            title="<"
-                            onPress={() => makeFetch(result.previous)}
-                        />
-                    ) : (
-                        <View />
-                    )}
-                    {result?.next && (
-                        <Button
-                            disabled={loading}
-                            title=">"
-                            onPress={() => makeFetch(result.next)}
-                        />
-                    )}
-                </View>
+                {controls}
                 <View style={styles.list}>
                     {result?.results?.map((el) => (
                         <PokemonWrapper url={el.url} key={el.url} />
                     ))}
                 </View>
-                <View style={styles.controls}>
-                    {result?.previous ? (
-                        <Button
-                            disabled={loading}
-                            title="<"
-                            onPress={() => makeFetch(result.previous)}
-                        />
-                    ) : (
-                        <View />
-                    )}
-                    {result?.next && (
-                        <Button
-                            disabled={loading}
-                            title=">"
-                            onPress={() => makeFetch(result.next)}
-                        />
-                    )}
-                </View>
+                {controls}
             </ScrollView>
         </View>
     );
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         columnGap: 20,
+        rowGap: 50,
         flex: 1,
         alignContent: "center",
         justifyContent: "space-between",
@@ -106,5 +107,16 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         paddingVertical: 10,
         paddingHorizontal: 10,
+    },
+    press: {
+        backgroundColor: "#FF0000",
+        paddingHorizontal: 10,
+        color: "#FFFFFF",
+        fontWeight: "900",
+        aspectRatio: "1/1",
+        fontSize: 20,
+        paddingVertical: 5,
+        borderRadius: 100,
+        margin: 5,
     },
 });

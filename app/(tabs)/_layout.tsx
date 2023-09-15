@@ -29,6 +29,7 @@ export default function TabLayout() {
                             name="square-o"
                             color={focused ? "red" : "gray"}
                         />
+                        // <Image  />
                     ),
                 }}
             />

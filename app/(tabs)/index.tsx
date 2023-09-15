@@ -1,18 +1,19 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
-    Button,
-    View,
-    StyleSheet,
-    ScrollView,
     Pressable,
+    ScrollView,
+    StyleSheet,
     Text,
     TextInput,
+    View,
 } from "react-native";
 import Pokemon from "../../components/Pokemon";
-import { PokemonData } from "../../types";
-import { getPokemonStorage, usePokemonList } from "../../scripts/storage";
-import { usePathname, useRouter } from "expo-router";
 import sort from "../../scripts/sort";
+import { usePokemonList } from "../../scripts/storage";
+import { PokemonData } from "../../types";
+import pokemonTypes from "../../scripts/pokemonTypes";
+import objectKeys from "../../scripts/objectKeys";
+import captilize from "../../scripts/captilize";
 
 export default function App() {
     const [sortBy, setSortBy] = useState<keyof PokemonData>("id");
@@ -46,7 +47,7 @@ export default function App() {
                         color: "white",
                         padding: 15,
                     }}
-                    onChangeText={(text) => setSearch(text)}
+                    onChangeText={(text) => setSearch(text.toLowerCase())}
                 />
             </View>
             <View style={styles.pressList}>
@@ -66,6 +67,28 @@ export default function App() {
                             }
                         >
                             {label}
+                        </Text>
+                    </Pressable>
+                ))}
+            </View>
+            <View style={styles.pressList}>
+                {objectKeys(pokemonTypes).map((key) => (
+                    <Pressable
+                        // style={
+                        //     sortBy === key ? styles.pressActive : styles.press
+                        // }
+                        key={key}
+                        // onPress={() => setSortBy(key)}
+                    >
+                        <Text
+                        // style={
+                        //     sortBy === key
+                        //         ? styles.pressTextActive
+                        //         : styles.pressText
+                        // }
+                        >
+                            {/* {label} */}
+                            {captilize(key)}
                         </Text>
                     </Pressable>
                 ))}
@@ -107,6 +130,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         columnGap: 20,
+        rowGap: 50,
         flex: 1,
         alignContent: "center",
         justifyContent: "space-evenly",

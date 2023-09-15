@@ -47,13 +47,13 @@ export function usePokemonListAction<Param>(
     useEffect(() => {
         action(param);
         const listener = storage.addOnValueChangedListener((key) => {
-            // console.log("do it", param);
+            console.log("do it", param);
             action(param);
         });
         return () => {
             listener.remove();
         };
-    }, []);
+    }, [param]);
 }
 
 export function usePokemonCatch(pokemon: PokemonData) {

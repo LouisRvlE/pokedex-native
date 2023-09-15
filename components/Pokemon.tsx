@@ -3,38 +3,30 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import captilize from "../scripts/captilize";
 import { usePokemonCatch } from "../scripts/storage";
 import { PokemonData, types } from "../types";
+import pokemonTypes from "../scripts/pokemonTypes";
 
 const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
     const [isPress, setPress] = useState(false);
-
-    const typeStyles: Record<types, { color: string }> = {
-        steel: { color: "#60a2b9" },
-        fighting: { color: "#ff8100" },
-        dragon: { color: "#4f60e2" },
-        water: { color: "#2481f0" },
-        electric: { color: "#fac100" },
-        fairy: { color: "#ef71f0" },
-        fire: { color: "#e72324" },
-        ice: { color: "#3dd9ff" },
-        bug: { color: "#92a212" },
-        normal: { color: "#a0a2a0" },
-        grass: { color: "#3da224" },
-        poison: { color: "#923fcc" },
-        psychic: { color: "#ef3f7a" },
-        rock: { color: "#b0ab82" },
-        ground: { color: "#92501b" },
-        ghost: { color: "#713f71" },
-        dark: { color: "#4f3f3d" },
-        flying: { color: "#82baf0" },
-    };
 
     const [isCatch, toggle] = usePokemonCatch(pokemonData);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.name}>
-                {pokemonData ? captilize(pokemonData.name) : "Chargement"}
-            </Text>
+            <View style={styles.catchContainer}>
+                <Text style={styles.name}>
+                    {pokemonData ? captilize(pokemonData.name) : "Chargement"}
+                </Text>
+                <Pressable style={styles.catchButton} onPress={toggle}>
+                    <Image
+                        style={styles.catchImage}
+                        source={
+                            isCatch
+                                ? require("../assets/pokemon_black.svg")
+                                : require("../assets/pokemon_white.svg")
+                        }
+                    />
+                </Pressable>
+            </View>
             {pokemonData && pokemonData?.sprites?.front_default && (
                 <Pressable
                     onPressIn={() => setPress(true)}
@@ -61,7 +53,7 @@ const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
                     {pokemonData.types.map(({ type: { name, url } }, id) => (
                         <View
                             style={{
-                                backgroundColor: typeStyles?.[name]?.color,
+                                backgroundColor: pokemonTypes?.[name]?.color,
                                 ...styles.typeChip,
                             }}
                             key={url}
@@ -72,12 +64,12 @@ const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
                         </View>
                     ))}
                 </View>
-                <Pressable style={styles.catchButton} onPress={toggle}>
+                {/* <Pressable style={styles.catchButton} onPress={toggle}>
                     <Text style={styles.catchText}>
                         {" "}
                         {isCatch ? "Release" : "Catch"}{" "}
                     </Text>
-                </Pressable>
+                </Pressable> */}
             </View>
         </View>
     );
@@ -87,6 +79,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 25,
         color: "white",
+        textAlign: "center",
     },
     container: {
         alignSelf: "flex-start",
@@ -131,6 +124,17 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "white",
         fontWeight: "600",
+    },
+    catchContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+        alignItems: "baseline",
+    },
+    catchImage: {
+        width: 24,
+        height: 24,
     },
 });
 
