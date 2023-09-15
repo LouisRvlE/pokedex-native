@@ -17,6 +17,9 @@ import captilize from "../../scripts/captilize";
 
 export default function App() {
     const [sortBy, setSortBy] = useState<keyof PokemonData>("id");
+    const [selectedTypes, setSelectedTypes] = useState<
+        (keyof typeof pokemonTypes)[]
+    >([]);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
 
@@ -28,11 +31,33 @@ export default function App() {
         { key: "name", label: "Name" },
     ];
 
+    const toggleType = (newType: keyof typeof pokemonTypes) => {
+        setSelectedTypes((old) =>
+            old.includes(newType)
+                ? old.filter((key) => key !== newType)
+                : [...old, newType]
+        );
+    };
+
     const filteredList = useMemo(
         () =>
-            list?.filter((el) => el.name.includes(search))?.sort(sort(sortBy)),
-        [search, list, sortBy]
+            list
+                ?.filter((el) => {
+                    let yes = el.name.includes(search);
+                    if (selectedTypes.length > 0 && yes) {
+                        selectedTypes.forEach((type) => {
+                            if (!el.types.find((el) => el.type.name === type)) {
+                                yes = false;
+                            }
+                        });
+                    }
+                    return yes;
+                })
+                ?.sort(sort(sortBy)),
+        [search, list, sortBy, selectedTypes]
     );
+
+    console.log(objectKeys(pokemonTypes));
 
     return (
         <ScrollView style={styles.container}>
@@ -74,20 +99,27 @@ export default function App() {
             <View style={styles.pressList}>
                 {objectKeys(pokemonTypes).map((key) => (
                     <Pressable
-                        // style={
-                        //     sortBy === key ? styles.pressActive : styles.press
-                        // }
+                        style={
+                            selectedTypes.includes(key)
+                                ? styles.pressActive
+                                : {
+                                      ...styles.press,
+                                      backgroundColor: pokemonTypes[key].color,
+                                  }
+                        }
                         key={key}
-                        // onPress={() => setSortBy(key)}
+                        onPress={() => toggleType(key)}
                     >
                         <Text
-                        // style={
-                        //     sortBy === key
-                        //         ? styles.pressTextActive
-                        //         : styles.pressText
-                        // }
+                            style={
+                                selectedTypes.includes(key)
+                                    ? {
+                                          ...styles.pressTextActive,
+                                          color: pokemonTypes[key].color,
+                                      }
+                                    : styles.pressText
+                            }
                         >
-                            {/* {label} */}
                             {captilize(key)}
                         </Text>
                     </Pressable>
@@ -141,6 +173,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignSelf: "center",
         marginVertical: 5,
+        flexWrap: "wrap",
+        alignContent: "center",
+        justifyContent: "center",
     },
     pressActive: {
         backgroundColor: "#FFFFFF",
