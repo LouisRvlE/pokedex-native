@@ -96,11 +96,11 @@ const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
                     >
                         <View
                             style={{
-                                height: 300,
-                                width: 600,
+                                height: 200,
+                                width: 400,
                                 display: "flex",
                                 flexDirection: "row",
-                                borderColor: "white",
+                                borderColor: "#FFFFFF22",
                                 borderWidth: 1,
                                 borderRadius: 10,
                                 overflow: "hidden",
@@ -109,14 +109,14 @@ const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
                             <View
                                 style={{
                                     backgroundColor: "black",
-                                    height: 300,
-                                    width: 300,
+                                    height: 200,
+                                    width: 200,
                                 }}
                             >
                                 <Image
                                     style={{
-                                        height: 300,
-                                        width: 300,
+                                        height: 200,
+                                        width: 200,
                                     }}
                                     source={{
                                         uri: pokemonData.sprites[
@@ -132,7 +132,7 @@ const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
                                     backgroundColor: "black",
                                     display: "flex",
                                     gap: 20,
-                                    width: 300,
+                                    width: 200,
                                     padding: 20,
                                 }}
                             >

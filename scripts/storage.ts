@@ -1,7 +1,6 @@
 import { MMKV } from "react-native-mmkv";
 import { PokemonData } from "../types";
 import { useEffect, useState, useMemo } from "react";
-import sort from "./sort";
 
 export const storage = new MMKV();
 
@@ -29,14 +28,6 @@ export function usePokemonList() {
             listener.remove();
         };
     }, []);
-
-    // const resort = (newSortBy: keyof PokemonData) => {
-    //     setList((old) => {
-    //         const newResult = [...old];
-    //         newResult.sort(sort(newSortBy));
-    //         return newResult;
-    //     });
-    // };
 
     return { list };
 }
