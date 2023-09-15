@@ -10,7 +10,7 @@ export function getPokemonStorage(): PokemonData[] {
     if (storage.contains(POKEMON_STORAGE_KEY)) {
         let s = storage.getString(POKEMON_STORAGE_KEY) as string;
         let result = JSON.parse(s);
-        if (typeof result === "object") {
+        if (Array.isArray(result)) {
             return result;
         }
     }
