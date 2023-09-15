@@ -56,22 +56,29 @@ const Pokemon = ({ pokemonData }: { pokemonData: PokemonData }) => {
                     />
                 </Pressable>
             )}
-            <View style={styles.types}>
-                {pokemonData.types.map(({ type: { name, url } }, id) => (
-                    <View
-                        style={{
-                            backgroundColor: typeStyles?.[name]?.color,
-                            ...styles.typeChip,
-                        }}
-                        key={url}
-                    >
-                        <Text style={styles.typeText}>{captilize(name)}</Text>
-                    </View>
-                ))}
+            <View>
+                <View style={styles.types}>
+                    {pokemonData.types.map(({ type: { name, url } }, id) => (
+                        <View
+                            style={{
+                                backgroundColor: typeStyles?.[name]?.color,
+                                ...styles.typeChip,
+                            }}
+                            key={url}
+                        >
+                            <Text style={styles.typeText}>
+                                {captilize(name)}
+                            </Text>
+                        </View>
+                    ))}
+                </View>
+                <Pressable style={styles.catchButton} onPress={toggle}>
+                    <Text style={styles.catchText}>
+                        {" "}
+                        {isCatch ? "Release" : "Catch"}{" "}
+                    </Text>
+                </Pressable>
             </View>
-            <Pressable style={{ backgroundColor: "red" }} onPress={toggle}>
-                <Text> {isCatch ? "Release" : "Catch"} </Text>
-            </Pressable>
         </View>
     );
 };
@@ -82,10 +89,10 @@ const styles = StyleSheet.create({
         color: "white",
     },
     container: {
+        alignSelf: "flex-start",
         alignItems: "center",
         width: 200,
         minHeight: 200,
-        // flex: 1,
     },
     frontImage: {
         height: 200,
@@ -112,6 +119,18 @@ const styles = StyleSheet.create({
     typeText: {
         color: "white",
         textAlign: "center",
+    },
+    catchButton: {
+        backgroundColor: "red",
+        borderRadius: 30,
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+        marginVertical: 10,
+    },
+    catchText: {
+        textAlign: "center",
+        color: "white",
+        fontWeight: "600",
     },
 });
 
