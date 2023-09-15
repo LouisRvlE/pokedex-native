@@ -19,8 +19,7 @@ const PokemonWrapper = ({ url }: { url: string }) => {
     if (!result) {
         return (
             <Text style={{ color: "white", minHeight: 200, width: 150 }}>
-                {" "}
-                Loading...{" "}
+                Loading...
             </Text>
         );
     }
