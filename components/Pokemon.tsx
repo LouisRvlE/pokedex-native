@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
     typeText: {
         color: "white",
         textAlign: "center",
+        fontWeight: "600",
     },
     catchButton: {
         backgroundColor: "red",
