@@ -52,8 +52,8 @@ export default function TabLayout() {
                         <Image
                             source={
                                 focused
-                                    ? require("../../assets/pokedex_active.png")
-                                    : require("../../assets/pokedex.png")
+                                    ? require("../../assets/grass_active.png")
+                                    : require("../../assets/grass.png")
                             }
                             style={{ width: 24, height: 24 }}
                         />
